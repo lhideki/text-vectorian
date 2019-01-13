@@ -107,7 +107,7 @@ _________________________________________________________________
 
 ## License
 
-* [MIT](https://github.com/lhideki/text-vectorian/LICENSE)
+* [MIT](https://github.com/lhideki/text-vectorian/blob/master/LICENSE)
 
 ## Authors
 
