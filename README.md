@@ -93,53 +93,7 @@ _________________________________________________________________
 
 ### Class
 
-```plantuml
-package base {
-    class Token {
-        +text: str
-        +vector: ndarray
-        +index: int
-    }
-    abstract Vectorizer {
-        {abstract} #_vectorize
-        {abstract} #_get_keras_layers
-    }
-    abstract Tokenizer {
-        {abstract} #_tokenize()
-        #_create_tokens()
-    }
-    abstract TextVectorian {
-        {abstract} +tokenizer: Tokenizer
-        {abstract} +vectorizer: Vectorizer
-        +tokens: [Tokens]
-        +vectors: ndarray
-        +indices: ndarray
-        +max_tokens_len: int
-        +reset()
-        +fit(text: str)
-        +get_keras_layer(trainable: bool)
-    }
-}
-
-Token --> Vectorizer
-Tokenizer --> Token
-TextVectorian --> Tokenizer
-
-package sentencepiece {
-    class Word2VecVectorizer {
-        +model: Word2Vec
-        +token2index: dict
-        +index2token: dict
-    }
-    class SentencePieceTokenizer
-    class SentencePieceVectorian
-}
-
-Vectorizer <|-- Word2VecVectorizer
-Tokenizer <|-- SentencePieceTokenizer
-TextVectorian <|-- SentencePieceVectorian
-
-```
+![](docs/class.png)
 
 ## License
 
