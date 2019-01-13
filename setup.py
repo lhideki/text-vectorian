@@ -15,5 +15,11 @@ setup(
     author_email='hideki@inoue-kobo.com',
     url='https://github.com/lhideki/text-vectorian',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs', '.vscode'))
+    packages=find_packages(exclude=('tests', 'docs', '.vscode')),
+    package_data={
+        'text_vectorian':
+            ['config.yml',
+            'models/wikija_sentencepiece.model',
+            'models/wikija_sentencepieced_word2vec.model']
+    }
 )
