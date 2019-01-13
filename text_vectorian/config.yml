@@ -1,0 +1,5 @@
+sentencepiece:
+  tokenizer:
+    filename: models/wikija_sentencepiece.model
+  vectorizer:
+    filename: models/wikija_sentencepieced_word2vec.model
