@@ -2,7 +2,7 @@
 
 ## Overview
 
-NLP(Natural Language Processing)において、自然言語をベクトル化するためのPythonモジュールです。
+NLP(Natural Language Processing)において、自然言語をベクトル化するためのPythonモジュールです。
 TokenizerやVectorizerの詳細を気にすることなく、任意のテキストから簡単にベクトル表現を取得することが可能です。
 
 現在提供しているTokenizer、Vectorizerの組み合わせは以下の通りです。
@@ -12,7 +12,7 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 * [SentencePiece](https://github.com/google/sentencepiece)
 * [Word2Vec](https://code.google.com/archive/p/word2vec/)
 
-それぞれ[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
+それぞれ[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
 
 ## Usage
 
@@ -52,7 +52,7 @@ print(vectors)
     1.3883296   -0.9925082    2.4345522   -1.2879591    2.6136968 ]]
 ```
 
-### Kerasで利用する
+### Kerasで利用する
 
 Vectroizerのモデル用のインデックスを取得し、KerasのEmbeddingレイヤーの入力として利用します。
 
