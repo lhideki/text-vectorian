@@ -16,6 +16,15 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 
 ## Usage
 
+学習済みモデルの取得をgitで行っているためgit lfsがインストールされている必要があります。
+git lfsが未導入の場合はgensimのモデルロードで失敗するため注意してください。
+
+以下はMacOSでのgit-lfsのインストール例です。
+
+```bash
+brew install git-lfs
+```
+
 ```bash
 pip install numpy
 pip install sentencepiece
