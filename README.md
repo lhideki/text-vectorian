@@ -16,6 +16,16 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 
 ## Usage
 
+```bash
+pip install numpy
+pip install sentencepiece
+pip install gensim
+pip install pyyaml
+pip install git+https://github.com/lhideki/text-vectorian
+```
+
+### 注意事項
+
 学習済みモデルの取得をgitで行っているためgit lfsがインストールされている必要があります。
 git lfsが未導入の場合はgensimのモデルロードで失敗するため注意してください。
 
@@ -23,14 +33,6 @@ git lfsが未導入の場合はgensimのモデルロードで失敗するため�
 
 ```bash
 brew install git-lfs
-```
-
-```bash
-pip install numpy
-pip install sentencepiece
-pip install gensim
-pip install pyyaml
-pip install git+https://github.com/lhideki/text-vectorian
 ```
 
 ## Examples
