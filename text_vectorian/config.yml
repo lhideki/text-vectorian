@@ -1,5 +1,9 @@
 sentencepiece:
   tokenizer:
-    filename: models/wikija_sentencepiece.model
+    models:
+      name: wikija_sentencepiece.model
+      url: https://s3-ap-northeast-1.amazonaws.com/models.inoue-kobo.com/text-vectorian/sentencepiece/wikija_sentencepiece.model
   vectorizer:
-    filename: models/wikija_sentencepieced_word2vec.model
+    models:
+      name: wikija_sentencepieced_word2vec.model
+      url: https://s3-ap-northeast-1.amazonaws.com/models.inoue-kobo.com/text-vectorian/sentencepiece/wikija_sentencepieced_word2vec.model

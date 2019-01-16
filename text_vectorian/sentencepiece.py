@@ -50,8 +50,8 @@ class SentencePieceTokenizer(Tokenizer):
         return tokens
 class SentencePieceVectorian(TextVectorian):
     def __init__(self):
-        self._tokenizer_filename = utils.get_absolute_filename(config['sentencepiece']['tokenizer']['filename'])
-        self._vectorizer_filename = utils.get_absolute_filename(config['sentencepiece']['vectorizer']['filename'])
+        self._tokenizer_filename = utils.load_model('sentencepiece', 'tokenizer', config)
+        self._vectorizer_filename = utils.load_model('sentencepiece', 'vectorizer', config)
         self._tokenizer = SentencePieceTokenizer(self._tokenizer_filename)
         self._vectorizer = Word2VecVectorizer(self._vectorizer_filename)
     @property
