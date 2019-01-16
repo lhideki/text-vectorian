@@ -7,9 +7,10 @@ modules = ['gensim', 'sentencepiece', 'keras']
 
 setup(
     name='text_vectorian',
-    version='0.1.1',
+    version='0.1.2',
     description='For getting token embedded vectors for NLP.',
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Hideki INOUE',
     author_email='hideki@inoue-kobo.com',
     url='https://github.com/lhideki/text-vectorian',
