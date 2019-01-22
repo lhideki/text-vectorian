@@ -14,6 +14,11 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 
 それぞれ[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
 
+### Char2Vec
+
+文字単位でTokenizeし、[Word2Vec](https://code.google.com/archive/p/word2vec/)でVectorizeします。
+[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
+
 ## Usage
 
 ```bash

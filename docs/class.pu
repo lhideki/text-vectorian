@@ -45,4 +45,14 @@ Vectorizer <|-- Word2VecVectorizer
 Tokenizer <|-- SentencePieceTokenizer
 TextVectorian <|-- SentencePieceVectorian
 
+package char2vec {
+    class Char2VecVectorizer
+    class CharacterTokenizer
+    class Char2VecVectorian
+}
+
+Vectorizer <|-- Char2VecVectorizer
+Tokenizer <|-- CharacterTokenizer
+TextVectorian <|-- Char2VecVectorian
+
 @enduml

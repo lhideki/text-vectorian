@@ -7,3 +7,8 @@ sentencepiece:
     models:
       name: wikija_sentencepieced_word2vec.model
       url: https://dl.dropboxusercontent.com/s/qpe0utrjyd64vva/wikija_sentencepieced_word2vec.model
+char2vec:
+  vectorizer:
+    models:
+      name: wikija_char2vec.model
+      url: https://dl.dropboxusercontent.com/s/l6nlont4jh7xry3/wikija_char2vec.model

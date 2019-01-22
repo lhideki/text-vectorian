@@ -1,4 +1,4 @@
-from text_vectorian import SentencePieceVectorian
+from text_vectorian import Char2VecVectorian
 import unittest
 from logging import getLogger
 import keras
@@ -6,20 +6,16 @@ import keras
 logger = getLogger(__name__)
 logger.setLevel('INFO')
 
-class SentencePieceVectorianTest(unittest.TestCase):
+class Char2VecVectorianTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.vectorian = SentencePieceVectorian()
+        cls.vectorian = Char2VecVectorian()
     def test_Tokenに分割できる(self):
         test_text = 'これはテストです。'
         self.vectorian.fit(test_text)
 
         expected = [
-            '▁',
-            'これは',
-            'テスト',
-            'です',
-            '。'
+            'こ', 'れ', 'は', 'テ', 'ス', 'ト', 'で', 'す', '。'
         ]
         fact = [token.text for token in self.vectorian.tokens]
         self.assertListEqual(fact, expected)
@@ -27,18 +23,18 @@ class SentencePieceVectorianTest(unittest.TestCase):
         test_text = 'これはテストです。'
         self.vectorian.fit(test_text)
 
-        expected = [14, 138, 2645, 2389, 1]
+        expected = [37, 17, 6, 87, 22, 30, 11, 39, 3]
         fact = self.vectorian.indices
         self.assertListEqual(fact.tolist(), expected)
     def test_vectorを取得できる(self):
         test_text = 'テスト'
         self.vectorian.fit(test_text)
 
-        expected = (2, 50)
+        expected = (3, 30)
         fact = self.vectorian.vectors.shape
         self.assertTupleEqual(fact, expected)
     def test_OutOfVocab時にログが出力される(self):
-        test_text = '  IEOW'
+        test_text = '⌛️'
         with self.assertLogs(level='WARN') as cm:
             self.vectorian.fit(test_text)
             print(cm.output)
@@ -49,9 +45,9 @@ class SentencePieceVectorianTest(unittest.TestCase):
         self.vectorian.reset()
         self.assertEquals(self.vectorian.max_tokens_len, 0)
         self.vectorian.fit(test_text1)
-        self.assertEquals(self.vectorian.max_tokens_len, 3)
+        self.assertEquals(self.vectorian.max_tokens_len, 6)
         self.vectorian.fit(test_text2)
-        self.assertEquals(self.vectorian.max_tokens_len, 5)
+        self.assertEquals(self.vectorian.max_tokens_len, 9)
         self.vectorian.reset()
         self.assertEquals(self.vectorian.max_tokens_len, 0)
     def test_kerasのlayerが取得できる(self):
