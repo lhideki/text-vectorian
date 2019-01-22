@@ -7,7 +7,7 @@ import text_vectorian.utils as utils
 from logging import getLogger
 
 logger = getLogger(__name__)
-DEFAULT_TOKEN = '-'
+DEFAULT_TOKEN = 'の'
 
 config = utils.load_config()
 
@@ -17,7 +17,10 @@ class Char2VecVectorizer(Vectorizer):
         self._index2token = self._model.wv.index2word
         self._token2index = { c: i for i, c in enumerate(self._index2token) }
     def _vectorize(self, token: str):
-        normalized_token = token.lower()
+        if token == ' ':
+            normalized_token = DEFAULT_TOKEN
+        else:
+            normalized_token = token.lower()
         if normalized_token not in self.token2index:
             logger.warning(f'{token} was not in vecabs, so use default token({DEFAULT_TOKEN}).')
             normalized_token = DEFAULT_TOKEN
