@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
-with open('README.md') as f:
+with open('README.md', encoding='utf-8') as f:
     readme = f.read()
 
 modules = ['gensim', 'sentencepiece', 'keras']
 
 setup(
     name='text_vectorian',
-    version='0.1.5',
+    version='0.1.6',
     description='For getting token embedded vectors for NLP.',
     long_description=readme,
     long_description_content_type='text/markdown',
