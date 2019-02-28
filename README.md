@@ -13,6 +13,14 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 * [Word2Vec](https://code.google.com/archive/p/word2vec/)
 
 それぞれ[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
+また、以下のようにクラス初期化時に個別のモデルを指定することも可能です。
+
+```python
+my_tokenizer_filename = '/some/place/sentencepiece.model'
+my_vectorizer_filename = '/some/place/word2vec.model'
+
+vectorian = SentencePieceVectorian(tokenizer_filename=my_tokenizer_filename, vectorizer_filename=my_vectorizer_filename)
+```
 
 ### Char2Vec
 

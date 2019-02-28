@@ -49,9 +49,15 @@ class SentencePieceTokenizer(Tokenizer):
 
         return tokens
 class SentencePieceVectorian(TextVectorian):
-    def __init__(self):
-        self._tokenizer_filename = utils.load_model('sentencepiece', 'tokenizer', config)
-        self._vectorizer_filename = utils.load_model('sentencepiece', 'vectorizer', config)
+    def __init__(self, tokenizer_filename = None, vectorizer_filename = None):
+        if tokenizer_filename:
+            self._tokenizer_filename = tokenizer_filename
+        else:
+            self._tokenizer_filename = utils.load_model('sentencepiece', 'tokenizer', config)
+        if vectorizer_filename:
+            self._vectorizer_filename = vectorizer_filename
+        else:
+            self._vectorizer_filename = utils.load_model('sentencepiece', 'vectorizer', config)
         self._tokenizer = SentencePieceTokenizer(self._tokenizer_filename)
         self._vectorizer = Word2VecVectorizer(self._vectorizer_filename)
     @property

@@ -7,7 +7,7 @@ modules = ['gensim', 'sentencepiece', 'keras']
 
 setup(
     name='text_vectorian',
-    version='0.1.6',
+    version='0.1.7',
     description='For getting token embedded vectors for NLP.',
     long_description=readme,
     long_description_content_type='text/markdown',
