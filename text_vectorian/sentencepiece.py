@@ -53,11 +53,11 @@ class SentencePieceVectorian(TextVectorian):
         if tokenizer_filename:
             self._tokenizer_filename = tokenizer_filename
         else:
-            self._tokenizer_filename = utils.load_model('sentencepiece', 'tokenizer', config)
+            self._tokenizer_filename = utils.load_model('sentencepiece', 'tokenizer', config)[0]
         if vectorizer_filename:
             self._vectorizer_filename = vectorizer_filename
         else:
-            self._vectorizer_filename = utils.load_model('sentencepiece', 'vectorizer', config)
+            self._vectorizer_filename = utils.load_model('sentencepiece', 'vectorizer', config)[0]
         self._tokenizer = SentencePieceTokenizer(self._tokenizer_filename)
         self._vectorizer = Word2VecVectorizer(self._vectorizer_filename)
     @property

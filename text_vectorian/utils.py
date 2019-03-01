@@ -25,10 +25,18 @@ def get_absolute_filename(filename):
     return os.path.join(get_package_directory(), filename)
 
 def load_model(modulename, typename, config):
-    name = config[modulename][typename]['models']['name']
-    url = config[modulename][typename]['models']['url']
-    filename = keras.utils.get_file(name, url, cache_dir=DOWNLOAD_ROOT, cache_subdir='.models')
+    models = config[modulename][typename]['models']
+    primary_filename = ''
+    filenames = []
 
-    print(filename)
+    for model in models:
+        name = model['name']
+        url = model['url']
 
-    return filename
+        filename = keras.utils.get_file(name, url, cache_dir=DOWNLOAD_ROOT, cache_subdir='.models')
+        print(filename)
+        filenames.append(filename)
+        if 'primary' in model and model['primary']:
+            primary_filename = filename
+
+    return primary_filename, filenames

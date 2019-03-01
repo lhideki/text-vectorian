@@ -1,14 +1,21 @@
 sentencepiece:
   tokenizer:
     models:
-      name: wikija_sentencepiece.model
-      url: https://dl.dropboxusercontent.com/s/ldjy1m9cut9oszu/wikija_sentencepiece.model
+      - name: wikija-sentencepiece_300.model
+        url: https://dl.dropboxusercontent.com/s/kbtykvxlu8tvcsy/wikija-sentencepiece_300.model
+        primary: true
   vectorizer:
     models:
-      name: wikija_sentencepieced_word2vec.model
-      url: https://dl.dropboxusercontent.com/s/qpe0utrjyd64vva/wikija_sentencepieced_word2vec.model
+      - name: wikija-sentencepieced_word2vec_300.model
+        url: https://dl.dropboxusercontent.com/s/bwe3rb82xivzes5/wikija-sentencepieced_word2vec_300.model
+        primary: true
+      - name: wikija-sentencepieced_word2vec_300.model.wv.vectors.npy
+        url: https://dl.dropboxusercontent.com/s/im7xv2vgw0sqi3p/wikija-sentencepieced_word2vec_300.model.wv.vectors.npy
+      - name: wikija-sentencepieced_word2vec_300.model.trainables.syn1neg.npy
+        url: https://dl.dropboxusercontent.com/s/wb4kzwzbcl4muw3/wikija-sentencepieced_word2vec_300.model.trainables.syn1neg.npy
 char2vec:
   vectorizer:
     models:
-      name: wikija_char2vec.model
-      url: https://dl.dropboxusercontent.com/s/l6nlont4jh7xry3/wikija_char2vec.model
+      - name: wikija_char2vec.model
+        url: https://dl.dropboxusercontent.com/s/l6nlont4jh7xry3/wikija_char2vec.model
+        primary: true

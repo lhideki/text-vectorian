@@ -27,14 +27,14 @@ class SentencePieceVectorianTest(unittest.TestCase):
         test_text = 'これはテストです。'
         self.vectorian.fit(test_text)
 
-        expected = [14, 138, 2645, 2389, 1]
+        expected = [14, 141, 2778, 2294, 1]
         fact = self.vectorian.indices
         self.assertListEqual(fact.tolist(), expected)
     def test_vectorを取得できる(self):
         test_text = 'テスト'
         self.vectorian.fit(test_text)
 
-        expected = (2, 50)
+        expected = (2, 300)
         fact = self.vectorian.vectors.shape
         self.assertTupleEqual(fact, expected)
     def test_OutOfVocab時にログが出力される(self):

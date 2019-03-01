@@ -50,7 +50,7 @@ class CharacterTokenizer(Tokenizer):
 
 class Char2VecVectorian(TextVectorian):
     def __init__(self):
-        self._vectorizer_filename = utils.load_model('char2vec', 'vectorizer', config)
+        self._vectorizer_filename = utils.load_model('char2vec', 'vectorizer', config)[0]
         self._tokenizer = CharacterTokenizer()
         self._vectorizer = Char2VecVectorizer(self._vectorizer_filename)
     @property
