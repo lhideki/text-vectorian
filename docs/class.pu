@@ -31,7 +31,7 @@ Token --> Vectorizer
 Tokenizer --> Token
 TextVectorian --> Tokenizer
 
-package sentencepiece {
+package SentencePiece {
     class Word2VecVectorizer {
         +model: Word2Vec
         +token2index: dict
@@ -45,7 +45,7 @@ Vectorizer <|-- Word2VecVectorizer
 Tokenizer <|-- SentencePieceTokenizer
 TextVectorian <|-- SentencePieceVectorian
 
-package char2vec {
+package Char2Vec {
     class Char2VecVectorizer
     class CharacterTokenizer
     class Char2VecVectorian
@@ -54,5 +54,15 @@ package char2vec {
 Vectorizer <|-- Char2VecVectorizer
 Tokenizer <|-- CharacterTokenizer
 TextVectorian <|-- Char2VecVectorian
+
+package SpBert {
+    class SpBertVectorian
+    class SpBertVectroizer
+    class SentencePieceTokenizer
+}
+
+Vectorizer <|-- SpBertVectroizer
+TextVectorian <|-- SpBertVectorian
+SpBert -- SentencePieceTokenizer
 
 @enduml

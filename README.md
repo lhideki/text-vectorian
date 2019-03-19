@@ -27,6 +27,62 @@ vectorian = SentencePieceVectorian(tokenizer_filename=my_tokenizer_filename, vec
 文字単位でTokenizeし、[Word2Vec](https://code.google.com/archive/p/word2vec/)でVectorizeします。
 [日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
 
+### SentencePiece + BERT(Keras BERT)
+
+* [SentencePiece](https://github.com/google/sentencepiece)
+* [Keras BERT](https://github.com/CyberZHG/keras-bert)
+
+[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルは以下の方が提供されています。
+
+* [BERT with SentencePiece を日本語 Wikipedia で学習してモデルを公開しました](https://yoheikikuta.github.io/bert-japanese/)
+
+上記のモデルを利用する場合も`Keras BERT`を利用するため、BERT用の設定ファイルを以下の様に別途準備してください。
+
+```json
+{
+  "attention_probs_dropout_prob": 0.1,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "max_position_embeddings": 512,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "type_vocab_size": 2,
+  "vocab_size": 32000
+}
+```
+
+[BERT with SentencePiece を日本語 Wikipedia で学習してモデルを公開しました](https://yoheikikuta.github.io/bert-japanese/)より以下のファイルをダウンロードします。
+
+* wiki-ja.vocab
+* wiki-ja.model
+* model.ckpt-1400000.data-00000-of-00001
+* model.ckpt-1400000.index
+* model.ckpt-1400000.meta
+
+以下の様に実行する事でBERTによる特徴量抽出を行う事ができます。
+
+```python
+tokenizer_filename = '[モデルをダウンロードしたディレクトリ]/model/wiki-ja.model'
+vectorizer_filename = '[モデルをダウンロードしたディレクトリ]/model/model.ckpt-1400000'
+vectorizer_config_filename = '[BERT用の設定ファイルを配置したディレクトリ]/bert_japanese_config.json'
+vectorian = SpBertVectorian(
+    tokenizer_filename=tokenizer_filename,
+    vectorizer_filename=vectorizer_filename,
+    vectorizer_config_filename=vectorizer_config_filename
+)
+text = 'これはテストです。'
+vectors = vectorian.fit(text).vectors
+
+print(vectors)
+```
+
+### 注意事項
+
+* kerasモデルの取得は可能ですが、インデックスの取得は未対応です。
+
 ## Usage
 
 ```bash
