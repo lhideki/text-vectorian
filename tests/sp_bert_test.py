@@ -22,10 +22,10 @@ class SpBertVectorianTest(unittest.TestCase):
         )
     def test_vectorを取得できる(self):
         test_text = 'これはテストです。'
-        self.vectorian.fit(test_text)
+        vectors = self.vectorian.fit(test_text).vectors
 
         expected = (64, 768)
-        fact = self.vectorian.vectors.shape
+        fact = vectors.shape
         self.assertTupleEqual(fact, expected)
 
 if __name__ == '__main__':

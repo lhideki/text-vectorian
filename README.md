@@ -47,6 +47,7 @@ vectorian = SentencePieceVectorian(tokenizer_filename=my_tokenizer_filename, vec
   "initializer_range": 0.02,
   "intermediate_size": 3072,
   "max_position_embeddings": 512,
+  "max_seq_length": 512,
   "num_attention_heads": 12,
   "num_hidden_layers": 12,
   "type_vocab_size": 2,

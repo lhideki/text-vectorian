@@ -44,6 +44,8 @@ class SpBertVectorian(TextVectorian):
                 indices[0, i] = sp.piece_to_id('<unk>')
         self._indices = indices
         self._vectors =  self.vectorizer.model.predict([indices, common_seg_input])[0]
+
+        return self
     @property
     def max_tokens_len(self):
         return self._config['max_seq_length']
