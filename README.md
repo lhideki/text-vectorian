@@ -13,47 +13,44 @@ TokenizerやVectorizerの詳細を気にすることなく、任意のテキス�
 * [Word2Vec](https://code.google.com/archive/p/word2vec/)
 
 それぞれ[日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
-また、以下のようにクラス初期化時に個別のモデルを指定することも可能です。
+
+以下の様にベクトルを取得します。
 
 ```python
-my_tokenizer_filename = '/some/place/sentencepiece.model'
-my_vectorizer_filename = '/some/place/word2vec.model'
+from text_vectorian import SentencePieceVectorian
 
-vectorian = SentencePieceVectorian(tokenizer_filename=my_tokenizer_filename, vectorizer_filename=my_vectorizer_filename)
+vectorian = SentencePieceVectorian()
+
+text = 'これはテストです。'
+vectors = vectorian.fit(text).vectors
 ```
 
 ### Char2Vec
 
 文字単位でTokenizeし、[Word2Vec](https://code.google.com/archive/p/word2vec/)でVectorizeします。
+
 [日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルを同梱しています。
+
+以下の様にベクトルを取得します。
+
+```python
+from text_vectorian import Char2VecVectorian
+
+vectorian = Char2VecVectorian()
+
+text = 'これはテストです。'
+vectors = vectorian.fit(text).vectors
+```
 
 ### SentencePiece + BERT(Keras BERT)
 
 * [SentencePiece](https://github.com/google/sentencepiece)
 * [Keras BERT](https://github.com/CyberZHG/keras-bert)
 
+BERTのモデルは別途準備する必要があります。
 [日本語Wikipedia](https://dumps.wikimedia.org/jawiki/)を元に学習した学習済みモデルは以下の方が提供されています。
 
 * [BERT with SentencePiece を日本語 Wikipedia で学習してモデルを公開しました](https://yoheikikuta.github.io/bert-japanese/)
-
-上記のモデルを利用する場合も`Keras BERT`を利用するため、BERT用の設定ファイルを以下の様に別途準備してください。
-
-```json
-{
-  "attention_probs_dropout_prob": 0.1,
-  "hidden_act": "gelu",
-  "hidden_dropout_prob": 0.1,
-  "hidden_size": 768,
-  "initializer_range": 0.02,
-  "intermediate_size": 3072,
-  "max_position_embeddings": 512,
-  "max_seq_length": 512,
-  "num_attention_heads": 12,
-  "num_hidden_layers": 12,
-  "type_vocab_size": 2,
-  "vocab_size": 32000
-}
-```
 
 [BERT with SentencePiece を日本語 Wikipedia で学習してモデルを公開しました](https://yoheikikuta.github.io/bert-japanese/)より以下のファイルをダウンロードします。
 
@@ -63,26 +60,21 @@ vectorian = SentencePieceVectorian(tokenizer_filename=my_tokenizer_filename, vec
 * model.ckpt-1400000.index
 * model.ckpt-1400000.meta
 
-以下の様に実行する事でBERTによる特徴量抽出を行う事ができます。
+以下の様に実行する事でBERTによるベクトルを取得できます。
 
 ```python
+from text_vectorian import SpBertVectorian
+
 tokenizer_filename = '[モデルをダウンロードしたディレクトリ]/model/wiki-ja.model'
 vectorizer_filename = '[モデルをダウンロードしたディレクトリ]/model/model.ckpt-1400000'
-vectorizer_config_filename = '[BERT用の設定ファイルを配置したディレクトリ]/bert_japanese_config.json'
 vectorian = SpBertVectorian(
     tokenizer_filename=tokenizer_filename,
     vectorizer_filename=vectorizer_filename,
-    vectorizer_config_filename=vectorizer_config_filename
 )
+
 text = 'これはテストです。'
 vectors = vectorian.fit(text).vectors
-
-print(vectors)
 ```
-
-### 注意事項
-
-* kerasモデルの取得は可能ですが、インデックスの取得は未対応です。
 
 ## Usage
 
@@ -163,6 +155,49 @@ Total params: 8,566,623
 Trainable params: 8,566,623
 Non-trainable params: 0
 _________________________________________________________________
+```
+
+### BERTをファインチューニングする
+
+BERTのモデル用のインデックスを取得し、Kerasでファインチューニングします。
+現在入力できる文は1つのみです。
+
+```python
+from text_vectorian import SpBertVectorian
+
+tokenizer_filename = '../bert-japanese/model/wiki-ja.model'
+vectorizer_filename = '../bert-japanese/model/model.ckpt-1400000'
+vectorian = SpBertVectorian(
+  tokenizer_filename=tokenizer_filename,
+  vectorizer_filename=vectorizer_filename
+)
+text = 'これはテストです。'
+
+labels = [[0, 0, 0, 1]] # ラベルデータ
+indices = []
+indices.appennd(vectorian.fit(text, suppress_vectors=True).indices)
+# BERTに入力する文の分割範囲を取得するSegmentsを取得します。
+segments = vectorian.get_segments()
+
+print(indices)
+
+from keras import Model
+from keras.layers import Dense
+
+batch_size = 32
+epochs = 1
+layers = vectorian.get_keras_layer(trainable=True)
+optimizer = vectorian.get_optimizer(samples_len=len(indices), batch_size=batch_size, epochs=epochs)
+
+output_tensor = keras.layers.Dense(4)(layers['last'])
+model = keras.Model(layers['inputs'], output_tensor)
+model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+model.summary()
+
+history = model.fit([indices, segments],
+                    labels,
+                    batch_size=batch_size,
+                    epochs=epochs)
 ```
 
 ## Development

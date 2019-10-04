@@ -41,8 +41,12 @@ class TextVectorian(ABC):
     @property
     def max_tokens_len(self):
         return self._max_tokens_len
+    @property
+    def samples_len(self):
+        return self._samples_len
     def reset(self):
         self._max_tokens_len = 0
+        self._samples_len = 0
     def fit(self, text: str):
         self._tokens = self.tokenizer._create_tokens(text, self.vectorizer)
         if hasattr(self, '_max_tokens_len'):
@@ -55,6 +59,10 @@ class TextVectorian(ABC):
         for token in self._tokens:
             self._vectors.append(token.vector)
             self._indices.append(token.index)
+        if hasattr(self, '_samples_len'):
+            self._samples_len += 1
+        else:
+            self._samples_len = 1
 
         return self
     @property
