@@ -7,7 +7,7 @@ modules = ['gensim', 'sentencepiece', 'keras', 'keras-bert']
 
 setup(
     name='text_vectorian',
-    version='0.1.11',
+    version='0.1.12',
     description='For getting token embedded vectors for NLP.',
     long_description=readme,
     long_description_content_type='text/markdown',
@@ -19,6 +19,6 @@ setup(
     packages=find_packages(exclude=('tests', 'docs', '.vscode')),
     package_data={
         'text_vectorian':
-            ['config.yml']
+            ['config.yml', 'default_bert_config.json']
     }
 )
