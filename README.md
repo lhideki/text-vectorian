@@ -189,7 +189,7 @@ epochs = 1
 layers = vectorian.get_keras_layer(trainable=True)
 optimizer = vectorian.get_optimizer(samples_len=len(indices), batch_size=batch_size, epochs=epochs)
 
-output_tensor = keras.layers.Dense(4)(layers['last'])
+output_tensor = keras.layers.Dense(4, activation='softmax')(layers['last'])
 model = keras.Model(layers['inputs'], output_tensor)
 model.compile(loss='categorical_crossentropy', optimizer=optimizer)
 model.summary()
