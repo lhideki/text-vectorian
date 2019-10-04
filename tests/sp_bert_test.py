@@ -25,12 +25,12 @@ class SpBertVectorianTest(unittest.TestCase):
         test_text = 'これはテストです。'
         vectors = self.vectorian.fit(test_text).vectors
 
-        expected = (64, 768)
+        expected = (128, 768)
         fact = vectors.shape
         self.assertTupleEqual(fact, expected)
 
     def test_configで指定したトークン長より長いトークンを指定すると警告ログが出力される(self):
-        test_text = 'これはテストです。' * 17
+        test_text = 'これはテストです。' * 34
         with self.assertLogs(getLogger('text_vectorian.sp_bert'), 'WARN'):
             vectors = self.vectorian.fit(test_text).vectors
 
@@ -55,7 +55,7 @@ class SpBertVectorianTest(unittest.TestCase):
         self.vectorian.fit(test_text).samples_len
         self.vectorian.fit(test_text).samples_len
         fact = self.vectorian.get_segments()
-        expected = np.zeros((2, 64))
+        expected = np.zeros((2, 128))
 
         self.assertListEqual(fact.tolist(), expected.tolist())
 
