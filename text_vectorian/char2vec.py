@@ -49,8 +49,11 @@ class CharacterTokenizer(Tokenizer):
         return list(text)
 
 class Char2VecVectorian(TextVectorian):
-    def __init__(self):
-        self._vectorizer_filename = utils.load_model('char2vec', 'vectorizer', config)[0]
+    def __init__(self, vectorizer_filename = None):
+        if vectorizer_filename:
+            self._vectorizer_filename = vectorizer_filename
+        else:
+            self._vectorizer_filename = utils.load_model('char2vec', 'vectorizer', config)[0]
         self._tokenizer = CharacterTokenizer()
         self._vectorizer = Char2VecVectorizer(self._vectorizer_filename)
     @property
