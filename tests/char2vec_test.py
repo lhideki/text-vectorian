@@ -1,7 +1,7 @@
 from text_vectorian import Char2VecVectorian
 import unittest
 from logging import getLogger
-import keras
+import tensorflow as tf
 
 logger = getLogger(__name__)
 logger.setLevel('INFO')
@@ -68,7 +68,8 @@ class Char2VecVectorianTest(unittest.TestCase):
 
     def test_kerasのlayerが取得できる(self):
         layer = self.vectorian.get_keras_layer()
-        self.assertTrue(isinstance(layer, keras.layers.embeddings.Embedding))
+        self.assertTrue(isinstance(
+            layer, tf.keras.layers.Embedding))
 
 
 if __name__ == '__main__':

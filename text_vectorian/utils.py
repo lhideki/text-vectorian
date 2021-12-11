@@ -1,6 +1,6 @@
 import os
 import yaml
-import keras
+import tensorflow as tf
 
 TEXT_VECTORIAN_CONFIG_FILENAME = 'config.yml'
 text_vectorian_config = None
@@ -17,7 +17,7 @@ def load_config():
 
     if not text_vectorian_config:
         with open(config_filename, 'r') as f:
-            text_vectorian_config = yaml.load(f)
+            text_vectorian_config = yaml.safe_load(f)
 
     return text_vectorian_config
 
@@ -33,7 +33,7 @@ def load_model(modulename, typename, config):
         name = model['name']
         url = model['url']
 
-        filename = keras.utils.get_file(name, url, cache_dir=DOWNLOAD_ROOT, cache_subdir='.models')
+        filename = tf.keras.utils.get_file(name, url, cache_dir=DOWNLOAD_ROOT, cache_subdir='.models')
         print(filename)
         filenames.append(filename)
         if 'primary' in model and model['primary']:

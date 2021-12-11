@@ -1,5 +1,6 @@
 from text_vectorian import Token, Vectorizer, Tokenizer, TextVectorian, SentencePieceTokenizer
-from keras_bert import load_trained_model_from_checkpoint, calc_train_steps, AdamWarmup
+from keras_bert import load_trained_model_from_checkpoint, calc_train_steps
+from keras_bert.optimizers import AdamWarmup
 import numpy as np
 import json
 from logging import getLogger
@@ -72,7 +73,7 @@ class SpBertVectorian(TextVectorian):
         self._indices = indices
         if not self._suppress_vectors:
             self._vectors = self.vectorizer.model.predict(
-                [[indices], common_seg_input])[0]
+                [np.array(indices).reshape(1, -1), common_seg_input])[0]
         if hasattr(self, '_samples_len'):
             self._samples_len += 1
         else:
@@ -100,11 +101,18 @@ class SpBertVectorian(TextVectorian):
         return self._vectorizer
 
     def get_optimizer(self, samples_len, batch_size, epochs, lr=1e-4):
+        # keras-bert-0.88.0のAdamWarmupはtf.kerasのOptimizerV2を継承しています。
+        # しかし、keras-2.7.0はtf.kerasではなく、kerasのOptimizerV2しか認識できず、エラーになります。
+        # このため、tf.kerasのOptimizerV2にbase classを変更します。
+        from keras.optimizer_v2.optimizer_v2 import OptimizerV2
+        AdamWarmup.__bases__ = (OptimizerV2, )
+
         decay_steps, warmup_steps = calc_train_steps(
             samples_len,
             batch_size=batch_size,
             epochs=epochs,
         )
+
         optimizer = AdamWarmup(
             decay_steps=decay_steps, warmup_steps=warmup_steps, lr=lr)
 

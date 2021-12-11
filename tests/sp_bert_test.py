@@ -1,7 +1,7 @@
 from text_vectorian import SpBertVectorian
 import unittest
 from logging import getLogger
-import keras
+import tensorflow as tf
 from pprint import pprint
 import numpy as np
 
@@ -63,12 +63,12 @@ class SpBertVectorianTest(unittest.TestCase):
         layers = self.vectorian.get_keras_layer(trainable=True)
         optimizer = self.vectorian.get_optimizer(10, 1, 1)
 
-        output_tensor = keras.layers.Dense(10)(layers['last'])
-        model = keras.Model(layers['inputs'], output_tensor)
+        output_tensor = tf.keras.layers.Dense(10)(layers['last'])
+        model = tf.keras.Model(layers['inputs'], output_tensor)
         model.compile(loss='categorical_crossentropy', optimizer=optimizer)
         # model.summary()
         config = model.get_config()
-        self.assertListEqual(config['output_layers'], [['dense_1', 0, 0]])
+        self.assertListEqual(config['output_layers'], [['dense', 0, 0]])
 
     def test_suppress_vectors指定時にvectorsを取得すると例外が発生する(self):
         test_text = 'これはテストです。'
